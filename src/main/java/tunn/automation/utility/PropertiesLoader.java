@@ -22,7 +22,7 @@ public class PropertiesLoader {
 	
 	
 	public PropertiesLoader() throws Exception{
-		general_configuration = readProperties("/config/config.properties");
+		general_configuration = readResourceProperties("/config/config.properties");
 		apppium_android_configuration = readResourceProperties("/config/appium/android.properties");
 		appium_ios_configuration = readResourceProperties("/config/appium/ios.properties");
 		appium_browser_configuration = readResourceProperties("/config/appium/browser.properties");

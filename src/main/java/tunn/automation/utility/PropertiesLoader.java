@@ -17,17 +17,18 @@ public class PropertiesLoader {
 	
 	public Properties selenium_configuration;
 	public Properties selenium_environment_variable;
+	public Properties general_configuration;
 	public Properties test_variables;
 	
 	
 	public PropertiesLoader() throws Exception{
-		
+		general_configuration = readProperties("/config/config.properties");
 		apppium_android_configuration = readResourceProperties("/config/appium/android.properties");
 		appium_ios_configuration = readResourceProperties("/config/appium/ios.properties");
 		appium_browser_configuration = readResourceProperties("/config/appium/browser.properties");
 		appium_appium_configuration = readResourceProperties("/config/appium/appium.properties");
 		
-		selenium_configuration = readResourceProperties("/config/selenium/config.properties");
+		selenium_configuration = readResourceProperties("/config/selenium/selenium.properties");
 		String seleniumEnvironment = selenium_configuration.getProperty("selenium.environment");
 		if(seleniumEnvironment != null && !seleniumEnvironment.equalsIgnoreCase("")) {
 			selenium_environment_variable = readResourceProperties("/config/selenium/environment_properties/" + seleniumEnvironment + ".properties");

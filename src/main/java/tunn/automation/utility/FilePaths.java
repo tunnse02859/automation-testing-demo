@@ -14,80 +14,84 @@ import org.apache.commons.io.FileUtils;
 
 import tunn.automation.report.Log;
 
-
 public class FilePaths {
-	
+
 	private static String REPORT_FOLDER;
 	private static String SCREENSHOT_FOLDER;
 	private static String REPORT_FILE_PATH;
-	
-	
+
 	public static String getRootProject() {
 		return System.getProperty("user.dir");
 	}
-	
+
 	/**
 	 * @param filename
 	 * @return
 	 * @throws Exception
 	 */
 	public static String getResourcePath(String filename) throws Exception {
-		
+
 		URL rsc = FilePaths.class.getResource(filename);
 		return Paths.get(rsc.toURI()).toFile().getAbsolutePath();
 	}
-	
-	public static void initReportFolder() throws IOException {
+
+	public static void initReportFolder() throws Exception {
 		String strScreenshotFolderName = "Screenshots";
 		String strReportFolderName = "Reports";
 		String awsReportRoot = System.getenv("DEVICEFARM_LOG_DIR");
-		if(awsReportRoot != null) {
+		if (awsReportRoot != null) {
 			REPORT_FOLDER = awsReportRoot + File.separator + strReportFolderName;
 			SCREENSHOT_FOLDER = REPORT_FOLDER + File.separator + strScreenshotFolderName + File.separator;
-			REPORT_FILE_PATH = REPORT_FOLDER + File.separator + "Report_" + System.getenv("DEVICEFARM_DEVICE_NAME") + ".html";
-		}else {
+			REPORT_FILE_PATH = REPORT_FOLDER + File.separator + "Report_" + System.getenv("DEVICEFARM_DEVICE_NAME")
+					+ ".html";
+		} else {
 			REPORT_FOLDER = getRootProject() + File.separator + strReportFolderName;
 			SCREENSHOT_FOLDER = REPORT_FOLDER + File.separator + strScreenshotFolderName + File.separator;
-			REPORT_FILE_PATH = REPORT_FOLDER + File.separator + "Report_" + FilePaths.getCurrentDateTimeString("dd-MM-yyyy HHmmss") + ".html";
+			if (PropertiesLoader.getPropertiesLoader().general_configuration.getProperty("report.addTimeStamp")
+					.equalsIgnoreCase("true")) {
+				REPORT_FILE_PATH = REPORT_FOLDER + File.separator + "Report_"
+						+ FilePaths.getCurrentDateTimeString("dd-MM-yyyy HHmmss") + ".html";
+			} else {
+				REPORT_FILE_PATH = REPORT_FOLDER + File.separator + "Report.html";
+			}
 		}
 		createDirectory(REPORT_FOLDER);
 		createDirectory(SCREENSHOT_FOLDER);
 	}
-	
+
 	/**
 	 * @return
 	 */
 	public static String getReportFolder() {
 		return REPORT_FOLDER;
 	}
-	
+
 	/**
 	 * @return
 	 */
 	public static String getScreenshotFolder() {
-		return SCREENSHOT_FOLDER;		
+		return SCREENSHOT_FOLDER;
 	}
-	
+
 	/**
 	 * @return
 	 */
 	public static String getReportFilePath() {
-		return REPORT_FILE_PATH;		
+		return REPORT_FILE_PATH;
 	}
-	
+
 	/**
 	 * @param timeStamp
 	 * @return
 	 */
 	public static String getCurrentDateTimeString(String timeStamp) {
-		
+
 		DateFormat dateFormat = new SimpleDateFormat(timeStamp);
 		Date date = new Date();
-		
+
 		return dateFormat.format(date);
 	}
-	
-	
+
 	/**
 	 * Correct the file path based on the OS system type
 	 * 
@@ -108,8 +112,8 @@ public class FilePaths {
 	 *            the path to file
 	 */
 	public static boolean pathExist(String path) {
-		
-			return Files.exists(new File(path).toPath());
+
+		return Files.exists(new File(path).toPath());
 
 	}
 
@@ -118,11 +122,11 @@ public class FilePaths {
 	 * 
 	 * @param path
 	 *            the path to file
-	 * @throws IOException 
+	 * @throws IOException
 	 */
-	public static void deletePath(String path) throws IOException  {
-		
-			Files.delete(new File(path).toPath());
+	public static void deletePath(String path) throws IOException {
+
+		Files.delete(new File(path).toPath());
 
 	}
 
@@ -134,9 +138,9 @@ public class FilePaths {
 	 * @throws Exception
 	 */
 	public static void createFile(String path) throws Exception {
-		
-			if (!pathExist(path))
-				Files.createFile(new File(path).toPath());
+
+		if (!pathExist(path))
+			Files.createFile(new File(path).toPath());
 	}
 
 	/**
@@ -144,13 +148,13 @@ public class FilePaths {
 	 * 
 	 * @param path
 	 *            the path to file
-	 * @throws IOException 
+	 * @throws IOException
 	 * @throws Exception
 	 */
-	public static void createDirectory(String path) throws IOException  {
-		
-			if (!pathExist(path))
-				Files.createDirectory(new File(path).toPath());
+	public static void createDirectory(String path) throws IOException {
+
+		if (!pathExist(path))
+			Files.createDirectory(new File(path).toPath());
 	}
 
 	/**
@@ -158,13 +162,13 @@ public class FilePaths {
 	 * 
 	 * @param src
 	 * @param dest
-	 * @throws IOException 
+	 * @throws IOException
 	 */
-	public static void copyFile(String src, String dest) throws IOException  {
-		
-			File sourceFile = new File(src);
-			File destFile = new File(dest);
-			Files.copy(sourceFile.toPath(), destFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+	public static void copyFile(String src, String dest) throws IOException {
+
+		File sourceFile = new File(src);
+		File destFile = new File(dest);
+		Files.copy(sourceFile.toPath(), destFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
 
 	}
 
@@ -173,14 +177,14 @@ public class FilePaths {
 	 * 
 	 * @param src
 	 * @param dest
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 	public static void copyDirectory(String src, String dest) throws IOException {
-		
-			File sourceFile = new File(src);
-			File destFile = new File(dest);
-			createDirectory(dest);
-			FileUtils.copyDirectory(sourceFile, destFile, true);
+
+		File sourceFile = new File(src);
+		File destFile = new File(dest);
+		createDirectory(dest);
+		FileUtils.copyDirectory(sourceFile, destFile, true);
 
 	}
 }

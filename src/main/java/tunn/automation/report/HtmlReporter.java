@@ -3,8 +3,6 @@ package tunn.automation.report;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
@@ -19,7 +17,7 @@ import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import com.aventstack.extentreports.reporter.configuration.ChartLocation;
 import com.aventstack.extentreports.reporter.configuration.Theme;
 
-import tunn.automation.setup.appium.Constant;
+import tunn.automation.utility.Common;
 import tunn.automation.utility.FilePaths;
 
 public class HtmlReporter {
@@ -184,7 +182,7 @@ public class HtmlReporter {
 		if (getNode() == null) {
 			return getParent();
 		} else {
-			if (!getNode().getModel().getParent().getName().equalsIgnoreCase(Constant.currentTest)) {
+			if (!getNode().getModel().getParent().getName().equalsIgnoreCase(Common.currentTest)) {
 				return getParent();
 			}
 			return getNode();

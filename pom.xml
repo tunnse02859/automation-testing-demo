@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>tunn.automation</groupId>
-	<artifactId>automation-testing</artifactId>
+	<artifactId>automation-testing-demo</artifactId>
 	<version>0.0.1</version>
 	<packaging>jar</packaging>
 	<name>automation-testing-demo</name>
@@ -18,13 +18,13 @@
 				<testSuiteXML>testng1.xml</testSuiteXML>
 			</properties>
 		</profile>
-			<profile>
+		<profile>
 			<id>appiumTest</id>
 			<properties>
 				<testSuiteXML>testng2.xml</testSuiteXML>
 			</properties>
 		</profile>
-			<profile>
+		<profile>
 			<id>APITest</id>
 			<properties>
 				<testSuiteXML>testng3.xml</testSuiteXML>
@@ -198,7 +198,7 @@
 				<configuration>
 					<!-- Suite testng xml file to consider for test execution -->
 					<suiteXmlFiles>
-						<suiteXmlFile>${project.build.directory}/test-classes/test_suites/${testSuiteXML}</suiteXmlFile>						
+						<suiteXmlFile>${project.build.directory}/test-classes/test_suites/${testSuiteXML}</suiteXmlFile>
 					</suiteXmlFiles>
 					<configuration>
 						<properties>

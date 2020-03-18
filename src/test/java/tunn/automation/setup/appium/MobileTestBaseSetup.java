@@ -14,6 +14,7 @@ import org.testng.annotations.BeforeSuite;
 import tunn.automation.appium.driver.AppiumBaseDriver;
 import tunn.automation.appium.driver.AppiumHandler;
 import tunn.automation.report.HtmlReporter;
+import tunn.automation.utility.Common;
 import tunn.automation.utility.FilePaths;
 
 public class MobileTestBaseSetup {
@@ -35,7 +36,7 @@ public class MobileTestBaseSetup {
 	@BeforeClass
 	public void beforeClass() throws Exception {
 		HtmlReporter.createTest(this.getClass().getSimpleName(), "");
-		Constant.currentTest = this.getClass().getSimpleName();
+		Common.currentTest = this.getClass().getSimpleName();
 	}
 
 	@BeforeMethod
